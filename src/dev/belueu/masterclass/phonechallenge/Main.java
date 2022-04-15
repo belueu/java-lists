@@ -1,10 +1,10 @@
-package dev.belueu.masterclass.challenge;
+package dev.belueu.masterclass.phonechallenge;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-public class ChallengeMain {
+public class Main {
 
     private static BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
     private static Phone phone = new Phone("1232323123");

@@ -1,4 +1,4 @@
-package dev.belueu.masterclass.challenge;
+package dev.belueu.masterclass.phonechallenge;
 
 public class Contact {
 
