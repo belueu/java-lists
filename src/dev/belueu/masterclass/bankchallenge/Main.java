@@ -18,16 +18,13 @@ public class Main {
         customer.setTransactions(new ArrayList<>(List.of(100.0, 123.0)));
         branch.addCustomer(customer);
         branch.setName("First");
-        bank.addBranch(branch.getName());
-
-        System.out.println(branch.getName());
-        System.out.println(bank.getBranches().size());
+        bank.addBranch(bank.findBranch(branch.getName()));
 
 
         boolean quit = false;
 
         while (!quit) {
-        loginOptions();
+            loginOptions();
             int option = Integer.parseInt(reader.readLine());
 
             switch (option) {
@@ -91,10 +88,11 @@ public class Main {
         bank.showBranchDetails(branchName);
     }
 
-    public static void addBranch()  throws IOException{
+    public static void addBranch() throws IOException {
         System.out.println("Enter Branch name");
         String branchName = reader.readLine();
-        bank.addBranch(branchName);
+        bank.addBranch(bank.findBranch(branchName));
+        System.out.println("New Branch with name: " + branchName + " created\n");
     }
 
     public static void updateBranch() throws IOException {

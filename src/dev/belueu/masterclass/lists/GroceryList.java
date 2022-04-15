@@ -1,7 +1,6 @@
 package dev.belueu.masterclass.lists;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class GroceryList {
 

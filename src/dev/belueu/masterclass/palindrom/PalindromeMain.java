@@ -1,7 +1,5 @@
 package dev.belueu.masterclass.palindrom;
 
-import java.util.Arrays;
-
 public class PalindromeMain {
 
     public static void main(String[] args) {

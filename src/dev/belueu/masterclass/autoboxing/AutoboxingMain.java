@@ -1,8 +1,6 @@
 package dev.belueu.masterclass.autoboxing;
 
-import java.math.RoundingMode;
 import java.text.DecimalFormat;
-import java.text.Format;
 import java.util.ArrayList;
 
 class IntClass {
