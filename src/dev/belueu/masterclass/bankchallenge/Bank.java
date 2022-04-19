@@ -17,59 +17,56 @@ public class Bank {
         return branches;
     }
 
-    public void setBranches(ArrayList<Branch> branches) {
-        this.branches = branches;
-    }
-
-    public Branch findBranch(String branchName) {
+    private Branch findBranch(String searchBranch) {
         Branch foundBranch = new Branch();
-
         for (Branch branch : branches) {
-            if (branch.getName().equals(branchName)) {
+            if (searchBranch.equals(branch.getName())) {
                 foundBranch = branch;
                 break;
             }
         }
-
         return foundBranch;
     }
 
-    public void addBranch(Branch branch) {
-        Branch foundBranch = findBranch(branch.getName());
-        if (foundBranch.getName() != null) {
-            System.out.println("Branch with name: " + branch.getName() + " already exists");
-            return;
-        }
-
-        branches.add(foundBranch);
-    }
-
-    public void updateBranch(String oldBranchName, String newBranchName) {
-        Branch oldBranch = findBranch(oldBranchName);
-        if (oldBranch.getName() != null) {
-            oldBranch.setName(newBranchName);
+    public void addBranch(String branchName) {
+        if (findBranch(branchName).getName() != null) {
+            System.out.println("Branch with name: " + branchName + " already exist");
         } else {
-            System.out.println("Branch with Name: " + oldBranch.getName() + " not found");
+            Branch createdBranch = new Branch(branchName);
+            getBranches().add(createdBranch);
+            System.out.println("New Branch with name: " + branchName + " created");
         }
-
     }
 
     public void deleteBranch(String branchName) {
-        Branch foundBranch = findBranch(branchName);
-        if (foundBranch.getName() != null) {
-            System.out.println("Branch with Name: " + foundBranch.getName() + " removed");
-            branches.remove(foundBranch);
+        if (findBranch(branchName).getName() == null) {
+            System.out.println("Branch with name: " + branchName + " does not exist");
         } else {
-            System.out.println("Branch with Name: " + branchName + " not found");
+            getBranches().remove(findBranch(branchName));
+            System.out.println("Branch with name: " + branchName + " removed");
         }
     }
 
-    public void showBranchDetails(String branchName) {
-        Branch foundBranch = findBranch(branchName);
-        if (foundBranch.getName() != null) {
-            System.out.println("Branch Details -> Name: " + foundBranch.getName() + ", Total Customers: " + foundBranch.getCustomers().size() + "\n");
+    public void updateBranch(String oldBranchName, String newBranchName) {
+        if (findBranch(oldBranchName).getName() == null) {
+            System.out.println("Branch with name: " + oldBranchName + " does not exist");
         } else {
-            System.out.println("Branch with name: " + branchName + " not found\n");
+            int foundBranchIndex = getBranches().indexOf(findBranch(oldBranchName));
+            getBranches().remove(foundBranchIndex);
+            getBranches().add(foundBranchIndex, new Branch(newBranchName));
+            System.out.println("Branch with name: " + oldBranchName + " updated to: " + newBranchName);
+        }
+    }
+
+    public void showAllBranches() {
+        getBranches().forEach(branch -> System.out.println(branch.getName()));
+    }
+
+    public void showBranchDetails(String branchName) {
+        if (branchName.equals(findBranch(branchName).getName())) {
+            System.out.println("Branch details -> Name: " + branchName + ", Total customers: " + findBranch(branchName).getCustomers().size());
+        } else {
+            System.out.println("Branch with name: " + branchName + " does not exist");
         }
     }
 }

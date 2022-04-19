@@ -23,62 +23,64 @@ public class Branch {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public ArrayList<Customer> getCustomers() {
         return customers;
     }
 
-    public void setCustomers(ArrayList<Customer> customers) {
-        this.customers = customers;
-    }
+    private Customer findCustomer(String customerName) {
+        Customer foundCustomer = new Customer();
 
-    public Customer findCustomer(String customerName) {
-        Customer foundCustomer = customers.stream().filter(customer -> customerName.equals(customer.getName())).findFirst().orElse(null);
-        if (foundCustomer != null) {
-            System.out.println("Customer with Name: " + foundCustomer.getName() + " found");
-            return foundCustomer;
-        } else {
-            System.out.println("Customer with Name: " + customerName + " not found");
+        for (Customer customer : customers) {
+            if (customer.getName().equals(customerName)) {
+                foundCustomer = customer;
+            }
         }
 
-        return null;
+        return foundCustomer;
     }
 
-    public void addCustomer(Customer customer) {
-        customers.add(customer);
-    }
-
-    public boolean updateCustomer(Customer oldCustomer, Customer newCustomer) {
-        Customer foundCustomer = findCustomer(oldCustomer.getName());
-        if (foundCustomer != null) {
-            oldCustomer.setName(newCustomer.getName());
-            return true;
+    public void addCustomer(String customerName) {
+        if (findCustomer(customerName).getName() != null) {
+            System.out.println("Customer with name: " + customerName + " already exist");
         } else {
-            System.out.println("Customer with Name: " + oldCustomer.getName() + " not found");
+            Customer newCustomer = new Customer(customerName);
+            getCustomers().add(newCustomer);
+            System.out.println("New Customer with name: " + customerName + " created");
+        }
+    }
+
+    public boolean updateCustomer(String oldCustomerName, String newCustomerName) {
+        if (findCustomer(oldCustomerName).getName() == null) {
+            System.out.println("Customer with name: " + oldCustomerName + " does not exist");
+        } else {
+            int indexOfCurrentCustomer = getCustomers().indexOf(findCustomer(oldCustomerName));
+            getCustomers().remove(indexOfCurrentCustomer);
+            getCustomers().add(indexOfCurrentCustomer, new Customer(newCustomerName));
+            System.out.println("Customer with name: " + oldCustomerName + " updated to: " + newCustomerName);
+            return true;
         }
         return false;
     }
 
-    public boolean deleteCustomer(Customer customer) {
-        Customer foundCustomer = findCustomer(customer.getName());
-        if (foundCustomer != null) {
-            System.out.println("Customer with Name: " + customer.getName() + " removed");
-            customers.remove(customer);
-            return true;
+    public boolean deleteCustomer(String customerName) {
+        if (findCustomer(customerName).getName() == null) {
+            System.out.println("Customer with name: " + customerName + " does not exist");
         } else {
-            System.out.println("Customer with Name: " + customer.getName() + " not found");
+            getCustomers().remove(findCustomer(customerName));
+            System.out.println("Customer with name: " + customerName + " removed");
         }
         return false;
     }
 
-    public String showCustomerDetails(Customer customer) {
-        Customer foundCustomer = findCustomer(customer.getName());
-        if (foundCustomer == null) {
-            System.out.println("Customer with Name: " + customer.getName() + " not found");
+    public void showCustomerDetails(String customerName) {
+        if (customerName.equals(findCustomer(customerName).getName())) {
+            System.out.println("Customer details -> Name: " + customerName + ", Total transactions: " + findCustomer(customerName).getTransactions().size());
+        } else {
+            System.out.println("Customer with name: " + customerName + " does not exist");
         }
-        return "Customer Details -> Name: " + customer.getName() + ", Total Transactions: " + customer.getTransactions().size();
+    }
+
+    public void showAllCustomers() {
+        getCustomers().forEach(customer -> System.out.println(customer.getName()));
     }
 }

@@ -25,16 +25,8 @@ public class Customer {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public ArrayList<Double> getTransactions() {
         return transactions;
-    }
-
-    public void setTransactions(ArrayList<Double> transactions) {
-        this.transactions = transactions;
     }
 
     public ArrayList<Double> findTransactions(Double transactionValue) {
@@ -55,5 +47,10 @@ public class Customer {
         transactions.add(transaction);
         System.out.println("Transaction with Value: " + transaction + " processed");
         return true;
+    }
+
+    public void showAccountDetails() {
+        System.out.println("Name: " + getName());
+        System.out.println("Total Transactions: " + getTransactions().size());
     }
 }
